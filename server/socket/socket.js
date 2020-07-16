@@ -9,6 +9,15 @@ const getClientCounter = (client) => {
     io.emit('enviarClientes', arrayClients)
 }
 
+const objMensajeBot = (mensaje) => {
+
+    return{
+        usuario: 'chat-bot',
+        mensaje,
+        color: 'gray'
+    }
+}
+
 io.on('connection', (client) => {
 
     console.log('Se ha unido un nuevo usuario', client.id);
@@ -22,6 +31,7 @@ io.on('connection', (client) => {
 
         console.log(arrayClients);
         getClientCounter(client);
+        io.sockets.emit('mensajeUsuario', objMensajeBot(usuario + ' ha ingresado al chat.'));
     });
 
     client.on('enviarMensaje', (objMensaje) => {
@@ -32,6 +42,8 @@ io.on('connection', (client) => {
     });
 
     client.on('disconnect', () => {
+        const usuario = arrayClients.filter(cliente => cliente.id === client.id)
+        io.sockets.emit('mensajeUsuario', objMensajeBot(usuario[0].usuario + ' ha dejado el chat.'))
         arrayClients = arrayClients.filter(cliente => cliente.id !== client.id)
         getClientCounter(client);
     });
