@@ -4,6 +4,9 @@ const socketIO = require('socket.io');
 const path = require('path');
 
 const app = express();
+const cors = require('cors')
+
+app.use(cors());
 
 const port = process.env.PORT || 8080;  
 

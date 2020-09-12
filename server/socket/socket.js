@@ -1,8 +1,6 @@
 const {io} = require('../server');
 const helpers = require('../helpers/helpers');
 
-io.origins('*:*')
-
 let arrayClients = []
 
 const getClientCounter = (client) => {
