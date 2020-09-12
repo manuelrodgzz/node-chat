@@ -5,6 +5,15 @@ const path = require('path');
 
 const app = express();
 
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Pass to next layer of middleware
+    next();
+});
+
 const port = process.env.PORT || 8080;  
 
 let server = http.createServer(app);
